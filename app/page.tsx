@@ -1,10 +1,41 @@
 "use client";
 import { useEffect } from "react";
 
+export type OtplessIdentity = {
+  identityType: string;        // e.g. "EMAIL", "PHONE"
+  identityValue: string;       // actual email/phone
+  channel: string;             // e.g. "OAUTH", "SMS"
+  methods: string[];           // e.g. ["GOOGLE"]
+  name?: string;               // optional full name
+  verified: boolean;           // whether verified
+  verifiedAt?: string;         // ISO timestamp if verified
+  isCompanyEmail?: string;     // "true" | "false" (string from API)
+};
+
+export type OtplessNetwork = {
+  ip?: string;
+  timezone?: string;
+  ipLocation?: Record<string, unknown>;
+};
+
+export type OtplessResponse = {
+  status: "SUCCESS" | "FAILURE" | string;
+  token: string;
+  userId: string;
+  timestamp: string;          // ISO timestamp
+  identities: OtplessIdentity[];
+  idToken?: string;
+  network?: OtplessNetwork;
+  deviceInfo?: Record<string, unknown>;
+  sessionInfo?: Record<string, unknown>;
+  firebaseInfo?: Record<string, unknown>;
+};
+
+
 const Page = () => {
   useEffect(() => {
   // Define the global callback before script loads
-  (window as any).otpless = (otplessUser: any) => {
+  (window as any).otpless = (otplessUser: OtplessResponse) => {
     const token = otplessUser.token;
     console.log("Token:", token);
     console.log("User Details:", JSON.stringify(otplessUser));
