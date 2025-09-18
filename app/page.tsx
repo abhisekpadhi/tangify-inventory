@@ -39,8 +39,29 @@ const Page = () => {
     const token = otplessUser.token;
     console.log("Token:", token);
     console.log("User Details:", JSON.stringify(otplessUser));
-    alert("token: " + otplessUser.token)
+    // alert("token: " + otplessUser.token)
     // 👉 You can also send token/user details to your backend here
+    fetch('/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Backend Response:", data)
+      if (data?.authenticated ?? false) {
+        window.location.href = '/inventory';
+        return
+      }
+      alert("Login failed");
+    })
+    .catch(error => {
+      alert("Error sending token to backend");
+      console.error("Error sending token to backend:", error)
+    });
+
   };        
 
     // Prevent duplicate injection
