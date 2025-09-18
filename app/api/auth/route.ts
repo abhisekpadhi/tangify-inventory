@@ -7,7 +7,7 @@ import { jwtUtils } from "@/lib/jwtUtils";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCANsWugRND8-g22pcHqoQSCpoYb9ajd7Q",
+    apiKey: process.env.FIREBASE_API_KEY || "",
     authDomain: "tangify-83e82.firebaseapp.com",
     projectId: "tangify-83e82",
     storageBucket: "tangify-83e82.firebasestorage.app",
