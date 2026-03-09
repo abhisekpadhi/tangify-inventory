@@ -10,6 +10,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
+  // Case 1: No session cookie → block /inventory
+  if (pathname.startsWith("/products") && !session) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+  
+
   // Case 2: Session cookie exists → block /
   if (pathname === "/" && session) {
     return NextResponse.redirect(new URL("/inventory", request.url));
@@ -20,5 +26,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/inventory/:path*"], // apply only to / and /inventory
+  matcher: ["/", "/inventory/:path*", "/products/:path*"], // apply only to / and /inventory
 };

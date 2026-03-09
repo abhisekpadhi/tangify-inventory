@@ -64,9 +64,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const dbIdentities = await getIdentitiesFromDB()
     // { EMAIL: ['avicool000@gmail.com'], MOBILE: [ '919439831236' ] }
-    console.log("db_identities: ", dbIdentities)
+    // console.log("db_identities: ", dbIdentities)
     const tokenDetails = await getTokenDetails(body.token)
-    console.log("Token details: ", tokenDetails)
+    // console.log("Token details: ", tokenDetails)
     if (dbIdentities === null) {
         console.log("No db_identities found")
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
         if (dbIdentities[identity.identityType].includes(identity.identityValue)) {
             const response = NextResponse.json({ message: "Login successful", authenticated: true });
             const jwt = await jwtUtils.createJWT({identity: identity.identityValue, name: identity.name})
-            console.log("JWT: ", jwt)
+            // console.log("JWT: ", jwt)
             // Set cookie
             response.cookies.set("session", jwt, {
                 httpOnly: false,   // can’t be accessed by JS

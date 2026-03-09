@@ -37,8 +37,8 @@ const Page = () => {
   // Define the global callback before script loads
   (window as any).otpless = (otplessUser: OtplessResponse) => {
     const token = otplessUser.token;
-    console.log("Token:", token);
-    console.log("User Details:", JSON.stringify(otplessUser));
+    // console.log("Token:", token);
+    // console.log("User Details:", JSON.stringify(otplessUser));
     // alert("token: " + otplessUser.token)
     // 👉 You can also send token/user details to your backend here
     fetch('/api/auth', {
